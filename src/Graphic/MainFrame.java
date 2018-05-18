@@ -10,12 +10,12 @@ public class MainFrame extends JFrame {
 	protected MenuBar menu = new MenuBar();
 	protected ToolBar tool = new ToolBar();
 	
-	protected JSplitPane VerticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+	protected JPanel mainPane = new JPanel();
 	protected JSplitPane rightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	protected JSplitPane leftSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-	protected AttributePane mainAttributePane = new AttributePane();
-	protected TextEditorPane mainTextEditorPane = new TextEditorPane();
-	protected MindMapPane mainMindMapPane = new MindMapPane();
+	public AttributePane mainAttributePane = new AttributePane();
+	public TextEditorPane mainTextEditorPane = new TextEditorPane();
+	public MindMapPane mainMindMapPane = new MindMapPane();
 	
 	
 	public MainFrame() {
@@ -31,9 +31,11 @@ public class MainFrame extends JFrame {
 	
 	private void loadSplitPane() {
 		//¼³Á¤
-		this.add(VerticalSplitPane);
-		VerticalSplitPane.setTopComponent(tool);
-		VerticalSplitPane.setBottomComponent(rightSplitPane);
+		this.add(mainPane);
+		mainPane.setLayout(new BorderLayout());
+		mainPane.add(tool, BorderLayout.NORTH);
+		mainPane.add(rightSplitPane, BorderLayout.CENTER);
+		
 		rightSplitPane.setContinuousLayout(true);
 		leftSplitPane.setContinuousLayout(true);
 		rightSplitPane.setLeftComponent(leftSplitPane);
@@ -51,6 +53,6 @@ public class MainFrame extends JFrame {
 	}
 	
 	public static void main(String [] args) {
-		new MainFrame();
+		MainFrame mainProgram = new MainFrame();
 	}
 }

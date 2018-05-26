@@ -8,19 +8,36 @@ import java.awt.*;
 
 public class TextEditorPane extends JPanel{
 			
+	private MainFrame mainFrame;
+	
 	protected JTextArea TextEditorArea = new JTextArea();	
 	private JButton ApplyButton = new JButton("Apply");
 	
-	public TextEditorPane() {
+	public TexttoTreeApplyHandler ApplyButtonHandler;
+	
+	public TextEditorPane(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
+
 		this.setLayout(new BorderLayout());
 		
 		this.add(TextEditorArea, BorderLayout.CENTER);
 		this.add(ApplyButton, BorderLayout.SOUTH);
-
-		ApplyButton.addActionListener(new TexttoTreeAppyHandler(this));
+		
 		this.setVisible(true);
 	}
 	//¸Þ¼Òµå
+	public void setEvent() {
+		if(mainFrame.MMP == null) {
+			if(mainFrame.AP == null) {
+				if(mainFrame.TEP == null) {
+					return;
+				}
+			}
+		}
+		ApplyButtonHandler = new TexttoTreeApplyHandler(mainFrame);
+		ApplyButton.addActionListener(ApplyButtonHandler);
+		
+	}
 	public String getText() {
 		return TextEditorArea.getText();
 	}

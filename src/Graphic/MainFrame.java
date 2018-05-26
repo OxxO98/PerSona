@@ -13,20 +13,24 @@ public class MainFrame extends JFrame {
 	protected JPanel mainPane = new JPanel();
 	protected JSplitPane rightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	protected JSplitPane leftSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-	public AttributePane mainAttributePane = new AttributePane();
-	public TextEditorPane mainTextEditorPane = new TextEditorPane();
-	public MindMapPane mainMindMapPane = new MindMapPane();
 	
+	public AttributePane AP = new AttributePane(this);
+	public TextEditorPane TEP = new TextEditorPane(this);
+	public MindMapPane MMP = new MindMapPane(this);
 	
-	public MainFrame() {
+	public MainFrame() {		
 		setTitle("MindMap Program");
 		setSize(800,600);
-		setVisible(true);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 		this.setJMenuBar(menu);
 		this.add(tool);
 		
 		this.loadSplitPane();
+		
+		TEP.setEvent();
+
+		setVisible(true);
 	}
 	
 	private void loadSplitPane() {
@@ -47,9 +51,9 @@ public class MainFrame extends JFrame {
 		leftSplitPane.setDividerSize(15);
 		
 		//컴포넌트 설정
-		rightSplitPane.setRightComponent(mainAttributePane);
-		leftSplitPane.setRightComponent(mainMindMapPane);
-		leftSplitPane.setLeftComponent(mainTextEditorPane);
+		rightSplitPane.setRightComponent(AP);
+		leftSplitPane.setRightComponent(MMP);
+		leftSplitPane.setLeftComponent(TEP);
 	}
 	
 	public static void main(String [] args) {

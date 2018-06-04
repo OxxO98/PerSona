@@ -1,41 +1,35 @@
 package System;
 
-import Graphic.*;
+import java.awt.Graphics;
 
-public class TreeNode extends MapNode{
+import Event.ShowAttributeHandler;
+import Graphic.*;
+import MindMapSystem.makeoutLines;
+
+public class TreeNode{
 	private int level;
 	//data는 MapNode에 protected로 구현
 	
 	private TreeNode parent;
 	private TreeNode child;
 	private TreeNode sibling;
+	
+	private String data;
+	
+	public MapNode Map = new MapNode();
 	//생성자
 	public TreeNode() {
-		super();
 		this.parent = null;
 		this.child = null;
 		this.sibling = null;
+		this.Map.setInclude(this);
 	}
 	public TreeNode (int level) {
-		super();
 		this.level = level;
 		this.parent = null;
 		this.child = null;
 		this.sibling = null;
-	}
-	public TreeNode (String data) {
-		super();
-		this.data = data;
-		this.parent = null;
-		this.child = null;
-		this.sibling = null;
-	}
-	public TreeNode(int level, TreeNode child, TreeNode sibling) {
-		super();
-		this.level = level;
-		this.parent = null;
-		this.child = child;
-		this.sibling = sibling;
+		this.Map.setInclude(this);
 	}
 	//시스템 관련 메소드
 	public TreeNode getParent() {
@@ -93,12 +87,13 @@ public class TreeNode extends MapNode{
 		this.sibling = null;
 		this.parent = null;
 	}
+	//
 	public String toString(){
 		String retStr = "";
 		for(int i = 0; i < this.getLevel(); i++) {
 			retStr = retStr.concat("\t");
 		}
-		retStr = retStr.concat(this.getData());
+		retStr = retStr.concat(Map.getData());
 		
 		return retStr;
 	}
@@ -112,21 +107,21 @@ public class TreeNode extends MapNode{
 	public String showInfo() {
 		String str1, str2, str3, str4, str5;
 		
-		str1 = this.getX() + ",\t" + this.getY() +"\t" + this.getSiblingIndex() + "\n";
-		str2 = "Data\t" + this.getData() + "\n";
+		str1 = Map.getX() + ",\t" + Map.getY() +"\t" + this.getSiblingIndex() + "\n";
+		str2 = "Data\t" + Map.getData() + "\n";
 		if(this.getParent() != null) {
-			str3 = "Parent\t" + this.getParent().getData() + "\n";
+			str3 = "Parent\t" + this.getParent().Map.getData() + "\n";
 		}else {
 			str3 = "null\n";
 		}
 		if(this.getSibling() != null) {
-			str4 = "Sibling\t" + this.getSibling().getData() + "\n";
+			str4 = "Sibling\t" + this.getSibling().Map.getData() + "\n";
 		}
 		else {
 			str4 = "null\n";
 		}
 		if(this.getChild() != null) {
-			str5 = "Child\t" + this.getChild().getData() + "\n";
+			str5 = "Child\t" + this.getChild().Map.getData() + "\n";
 		}
 		else {
 			str5 = "null\n";
@@ -165,14 +160,41 @@ public class TreeNode extends MapNode{
 		}
 		return Index%4;
 	}
-	public void setLink(int Index, int ChildIndex) {
-		if(this.hasLink(Index) == false || this.getChild().hasLink(ChildIndex) == false) {
-			return;
+	public void setLink(int ParentIndex, int Index) {
+		Map.criteria[Index].setLink(true);
+		Map.criteria[Index].linkedPoint = this.getParent().Map.criteria[ParentIndex];
+		this.getParent().Map.criteria[ParentIndex].setLink(true);
+		this.getParent().Map.criteria[ParentIndex].linkedPoint = Map.criteria[Index];
+	}
+	public void refactorLink() {
+		if(makeoutLines.filterLine(this) != -1) {
+			this.Map.criteria[makeoutLines.filterLine(this)].expressLine();
 		}
 		
-		this.criteria[Index].setLink(true);
-		this.criteria[Index].linkedPoint = this.getChild().criteria[ChildIndex];
-		this.getChild().criteria[ChildIndex].setLink(true);
-		this.getChild().criteria[Index].linkedPoint = this.criteria[ChildIndex];
+		TreeNode node = this.getChild();
+		if(node == null) {
+			return;
+		}
+		while(true) {
+			int index = makeoutLines.filterLine(node);
+			if(index != -1) {
+				node.Map.criteria[index].expressLine();
+			}
+			if(node.getSibling() == null) {
+				break;
+			}
+			node = node.getSibling();
+		}
+	}
+	//Debug용
+	public void showLink() {
+		for(int i = 0; i < 4; i++) {
+			if(Map.criteria[i].getLink() != false) {
+				System.out.println(Map.criteria[i].linkedPoint);
+			}
+			if(this.getParent().Map.criteria[i].getLink() != false) {
+				System.out.println(this.getParent().Map.criteria[i].linkedPoint);
+			}
+		}
 	}
 }

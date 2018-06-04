@@ -23,6 +23,8 @@ public class TextEditorPane extends JPanel{
 		this.add(TextEditorArea, BorderLayout.CENTER);
 		this.add(ApplyButton, BorderLayout.SOUTH);
 		
+		TextEditorArea.setTabSize(4);
+		
 		this.setVisible(true);
 	}
 	//¸Þ¼Òµå
@@ -34,9 +36,8 @@ public class TextEditorPane extends JPanel{
 				}
 			}
 		}
-		ApplyButtonHandler = new TexttoTreeApplyHandler(mainFrame);
-		ApplyButton.addActionListener(ApplyButtonHandler);
-		
+		ApplyButtonHandler = new TexttoTreeApplyHandler();
+		ApplyButton.addActionListener(ApplyButtonHandler);	
 	}
 	public String getText() {
 		return TextEditorArea.getText();

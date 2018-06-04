@@ -1,6 +1,12 @@
 package MindMapSystem;
 
 import System.*;
+
+import java.awt.Color;
+
+import javax.swing.JLabel;
+
+import Event.ShowAttributeHandler;
 import Graphic.*;
 
 public class makeShellMap {
@@ -8,9 +14,10 @@ public class makeShellMap {
 	static Tree tree;
 	static MindMapPane MMP;
 	
-	static public double ratio = 0.8;
-	static public double distance = 120;
-	static public double defWidth = 100, defHeight = 60;
+	static public double ratioDistance = 0.5;
+	static public double ratioSize = 0.7;
+	static public double distance = 250;
+	static public double defWidth = 120, defHeight = 80;
 	
 	static private int midX, midY;
 	
@@ -31,14 +38,14 @@ public class makeShellMap {
 	}
 	
 	private static void makeoutNode(TreeNode node) {
-		double Nratio = ratio;
+		double Nratio = ratioSize;
 		double Ndistance = distance;
 		//Parent의 중앙점이 기준이다.
-		double NcitX = (int)(node.getParent().getNodeX()+node.getParent().getWidth()/2);
-		double NcitY = (int)(node.getParent().getNodeY()+node.getParent().getHeight()/2);
+		double NcitX = (int)(node.getParent().Map.getNodeX()+node.getParent().Map.getWidth()/2);
+		double NcitY = (int)(node.getParent().Map.getNodeY()+node.getParent().Map.getHeight()/2);
 		for(int i = 0; i < node.getLevel()-1; i++) {
-			Nratio *= ratio;
-			Ndistance *= ratio;
+			Nratio *= ratioSize;
+			Ndistance *= ratioDistance;
 		}
 		double dX = (int)Ndistance, dY = (int)Ndistance;
 		Ndistance = (int)Ndistance;
@@ -63,10 +70,10 @@ public class makeShellMap {
 				dY *= -1;
 				break;
 		}
-		node.setDimension(width, height);
-		node.setXY(NcitX+dX-width/2, NcitY+dY-height/2);
-		node.expressNode(MMP);
-		node.showMember(MMP);
+		node.Map.setDimension(width, height);
+		node.Map.setXY(NcitX+dX-width/2, NcitY+dY-height/2);
+		node.Map.expressNode(MMP);
+		node.Map.showMember(MMP);
 	}
 	
 	private static void makeoutNotRoot() {
@@ -85,9 +92,9 @@ public class makeShellMap {
 	}
 	
 	private static void makeoutRoot() {
-		tree.root.setDimension(defWidth, defHeight);
-		tree.root.setXY(midX-defWidth/2, midY-defHeight/2);
-		tree.root.expressNode(MMP);
-		tree.root.showMember(MMP);
+		tree.root.Map.setDimension(defWidth, defHeight);
+		tree.root.Map.setXY(midX-defWidth/2, midY-defHeight/2);
+		tree.root.Map.expressNode(MMP);
+		tree.root.Map.showMember(MMP);
 	}
 }

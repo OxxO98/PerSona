@@ -5,16 +5,26 @@ import System.*;
 
 import java.awt.event.*;
 
-public class ShowAttributeHandler implements ActionListener {
+import javax.swing.JLabel;
+
+import AttributeSystem.ShowAttribute;
+
+public class ShowAttributeHandler extends MouseAdapter{
 	
-	private MainFrame mainFrame;
-	
-	public ShowAttributeHandler(MainFrame mainFrame) {
-		this.mainFrame = mainFrame;
+	public ShowAttributeHandler() {
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-		MapNode ClickedNode = (MapNode)e.getSource();
+	public void mousePressed(MouseEvent e) {
+		JLabel ClickedNode = (JLabel)e.getComponent();
+		if(ClickedNode != MainSystem.getFrame().AP.SelectedNode) {
+			ShowAttribute.Selected(MainSystem.getFrame().AP, (MapNode)ClickedNode);
+		}
+		else {
+			ShowAttribute.Deselected(MainSystem.getFrame().AP);
+		}
+		//out
+		System.out.println(MainSystem.getFrame().AP.SelectedNode);
+
+		ShowAttribute.show(MainSystem.getFrame().AP, MainSystem.getFrame().AP.SelectedNode);
 	}
-	
 }

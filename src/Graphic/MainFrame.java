@@ -1,8 +1,12 @@
 package Graphic;
 
 import Graphic.*;
+import System.MainSystem;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
+
 import java.awt.*;
 
 public class MainFrame extends JFrame {
@@ -10,9 +14,9 @@ public class MainFrame extends JFrame {
 	protected MenuBar menu = new MenuBar();
 	protected ToolBar tool = new ToolBar();
 	
-	protected JPanel mainPane = new JPanel();
-	protected JSplitPane rightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-	protected JSplitPane leftSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+	public JPanel mainPane = new JPanel();
+	public JSplitPane rightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+	public JSplitPane leftSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	
 	public AttributePane AP = new AttributePane(this);
 	public TextEditorPane TEP = new TextEditorPane(this);
@@ -20,7 +24,7 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {		
 		setTitle("MindMap Program");
-		setSize(800,600);
+		setSize(700, 400);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 		this.setJMenuBar(menu);
@@ -57,6 +61,6 @@ public class MainFrame extends JFrame {
 	}
 	
 	public static void main(String [] args) {
-		MainFrame mainProgram = new MainFrame();
+		MainSystem.start();
 	}
 }

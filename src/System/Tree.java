@@ -8,7 +8,6 @@ public class Tree {
 	public void showTree() {
 		TreeNode selectedNode = this.root;
 		while(true) {
-//			System.out.println(selectedNode.toString());
 			System.out.println(selectedNode.showInfo());
 			if(this.goNext(selectedNode) == null) {
 				break;

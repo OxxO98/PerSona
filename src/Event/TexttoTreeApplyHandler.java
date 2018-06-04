@@ -2,21 +2,24 @@ package Event;
 
 import Graphic.*;
 import MindMapSystem.makeShellMap;
+import MindMapSystem.makeoutLines;
 import System.*;
 import TextEditorSystem.MakeTexttoTree;
 
 import java.awt.event.*;
 
+import AttributeSystem.ShowAttribute;
+
 public class TexttoTreeApplyHandler implements ActionListener {
 	
-	private MainFrame mainFrame;
-	
-	public TexttoTreeApplyHandler(MainFrame mainFrame) {
-		this.mainFrame = mainFrame;
+	public TexttoTreeApplyHandler() {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		MakeTexttoTree.startMake(mainFrame.TEP);
-		makeShellMap.makeMap(MainSystem.getCurrentTree(), mainFrame.MMP);
+		ShowAttribute.Deselected(MainSystem.getFrame().AP);
+		MakeTexttoTree.startMake();
+		makeShellMap.makeMap(MainSystem.getCurrentTree(), MainSystem.getFrame().MMP);
+		makeoutLines.makeout(MainSystem.getCurrentTree());
+		ShowAttribute.show(MainSystem.getFrame().AP, null);
 	}
 }

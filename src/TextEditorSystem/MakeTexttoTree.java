@@ -1,7 +1,9 @@
 package TextEditorSystem;
 
 import System.*;
+import Event.ShowAttributeHandler;
 import Graphic.TextEditorPane;
+import Graphic.*;
 
 public class MakeTexttoTree {
 	/*
@@ -15,7 +17,9 @@ public class MakeTexttoTree {
 	static String originalStr;
 	static String [] splitedStr;
 	//public메소드
-	public static void startMake(TextEditorPane TEP) {
+	public static void startMake() {
+		TextEditorPane TEP = MainSystem.getFrame().TEP;
+		
 		MainSystem.setTree(new Tree());
 		MakeTexttoTree.tree = MainSystem.getCurrentTree();
 		//null일떄를 위한 과정 null이 아니면 그냥 별 영향 X임
@@ -48,28 +52,29 @@ public class MakeTexttoTree {
 					//첫 child일경우
 					selectedNode.setChild(new TreeNode());
 					selectedNode.getChild().setParent(selectedNode);
-					selectedNode.setLink(selectedNode.getChild().getThisLinkIndex(), (selectedNode.getChild().getThisLinkIndex()+2)%4);
 					selectedNode = selectedNode.getChild();
+					
 				}else if(MakeTexttoTree.isSibling(splitedStr[i-1], splitedStr[i]) == true) {
 					//sibling일경우
 					selectedNode.setSibling(new TreeNode());
 					selectedNode.getSibling().setParent(selectedNode.getParent());
-					selectedNode.setLink(selectedNode.getSibling().getThisLinkIndex(), (selectedNode.getSibling().getThisLinkIndex()+2)%4);
 					selectedNode = selectedNode.getSibling();
 				}else {
 					//둘다 아니고 탐색 해야함...
 					selectedNode = MakeTexttoTree.isWhere(MakeTexttoTree.getTextLevel(splitedStr[i]));
 					selectedNode.setSibling(new TreeNode());
 					selectedNode.getSibling().setParent(selectedNode.getParent());
-					selectedNode.setLink(selectedNode.getSibling().getThisLinkIndex(), (selectedNode.getSibling().getThisLinkIndex()+2)%4);
 					selectedNode = selectedNode.getSibling();
 				}
 			}
 			catch(ArrayIndexOutOfBoundsException e) {
 				selectedNode = tree.root;
 			}
+			if(selectedNode != tree.root) {
+				selectedNode.setLink(selectedNode.getThisLinkIndex(), (selectedNode.getThisLinkIndex()+2)%4);
+			}
 			selectedNode.setLevel(MakeTexttoTree.getTextLevel(splitedStr[i]));
-			selectedNode.setData(splitedStr[i].substring(selectedNode.getLevel()));
+			selectedNode.Map.setData(splitedStr[i].substring(selectedNode.getLevel()));
 		}
 	}
 	private static boolean isChild(String parentStr, String childStr) {

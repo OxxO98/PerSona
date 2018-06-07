@@ -24,9 +24,14 @@ public class TexttoTreeApplyHandler implements ActionListener {
 		ShowAttribute.Deselected(MainSystem.getFrame().AP);
 		MakeTexttoTree.startMake();	
 		
+		MainSystem.getFrame().MMPScrollPane.getViewport().setViewPosition(new Point(0,0));
 		MainSystem.getFrame().MMP.setPreferredSize(MainSystem.getCurrentTree().getTreeSize());
 		
-		makeShellMap.makeMap(MainSystem.getCurrentTree(), MainSystem.getFrame().MMP);
+		Point center = new Point(MainSystem.getFrame().MMP.getWidth()/2-MainSystem.getFrame().MMPScrollPane.getViewport().getWidth()/2
+								,MainSystem.getFrame().MMP.getHeight()/2-MainSystem.getFrame().MMPScrollPane.getViewport().getHeight()/2);
+		MainSystem.getFrame().MMPScrollPane.getViewport().setViewPosition(center);
+		
+		makeShellMap.makeMap();
 		makeoutLines.makeout(MainSystem.getCurrentTree());
 		
 		ShowAttribute.show(MainSystem.getFrame().AP, null);

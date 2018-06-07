@@ -11,9 +11,6 @@ import Graphic.*;
 
 public class makeShellMap {
 	
-	static Tree tree;
-	static MindMapPane MMP;
-	
 	static public double ratioDistance = 0.5;
 	static public double ratioSize = 0.7;
 	static public double distance = 250;
@@ -21,9 +18,9 @@ public class makeShellMap {
 	
 	static private int midX, midY;
 	
-	public static void makeMap(Tree tree, MindMapPane MMP) {
-		makeShellMap.tree = tree;
-		makeShellMap.MMP = MMP;
+	public static void makeMap() {
+		Tree tree = MainSystem.getCurrentTree();
+		MindMapPane MMP = MainSystem.getFrame().MMP;
 		
 		midX = MMP.getWidth()/2;
 		midY = MMP.getHeight()/2;
@@ -38,6 +35,8 @@ public class makeShellMap {
 	}
 	
 	private static void makeoutNode(TreeNode node) {
+		MindMapPane MMP = MainSystem.getFrame().MMP;
+		
 		double Nratio = ratioSize;
 		double Ndistance = distance;
 		//Parent의 중앙점이 기준이다.
@@ -77,7 +76,9 @@ public class makeShellMap {
 	}
 	
 	private static void makeoutNotRoot() {
-		TreeNode node = makeShellMap.tree.root.getChild();
+		Tree tree = MainSystem.getCurrentTree();
+		
+		TreeNode node = tree.root.getChild();
 		if(node == null) {
 			return;
 		}
@@ -92,6 +93,9 @@ public class makeShellMap {
 	}
 	
 	private static void makeoutRoot() {
+		Tree tree = MainSystem.getCurrentTree();
+		MindMapPane MMP = MainSystem.getFrame().MMP;
+		
 		tree.root.Map.setDimension(defWidth, defHeight);
 		tree.root.Map.setNodeXY(midX-defWidth/2, midY-defHeight/2);
 		tree.root.Map.expressNode(MMP);

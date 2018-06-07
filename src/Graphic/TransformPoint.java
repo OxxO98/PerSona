@@ -3,6 +3,7 @@ package Graphic;
 import javax.swing.*;
 
 import Event.TransformHandler;
+import System.MainSystem;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -107,30 +108,30 @@ public class TransformPoint extends JLabel {
 				break;
 		}
 	}
-	public void setTransformNode(int x, int y, int width, int height) {
+	public void setTransformNode(int atr, int x, int y, int width, int height) {
 		int Psize = size/2;
-		
-		switch(attribute) {
+				
+		switch(atr) {
 			case 0 :
-				this.setLocation(x+width/2, y-Psize);
+				this.setLocation(x+width/2-Psize, y-Psize);
 				break;
 			case 1 :
-				this.setLocation(x+width, y-Psize);
+				this.setLocation(x+width-Psize, y-Psize);
 				break;
 			case 2 :
-				this.setLocation(x+width, y+height/2);
+				this.setLocation(x+width-Psize, y+height/2-Psize);
 				break;
 			case 3 :
-				this.setLocation(x+width, y+height);
+				this.setLocation(x+width-Psize, y+height-Psize);
 				break;
-			case 4 :
-				this.setLocation(x+width/2, y+height);
+			case 4 : 
+				this.setLocation(x+width/2-Psize, y+height-Psize);
 				break;
 			case 5 :
-				this.setLocation(x-Psize, y+height);
+				this.setLocation(x-Psize, y+height-Psize);
 				break;
 			case 6 :
-				this.setLocation(x-Psize, y+height/2);
+				this.setLocation(x-Psize, y+height/2-Psize);
 				break;
 			case 7 :
 				this.setLocation(x-Psize, y-Psize);

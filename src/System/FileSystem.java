@@ -31,7 +31,7 @@ public class FileSystem {
 			MakeJsontoText.startMake(jsonObj);
 			ShowAttribute.Deselected(MainSystem.getFrame().AP);
 			MakeTexttoTree.startMake();
-			makeShellMap.makeMap(MainSystem.getCurrentTree(), MainSystem.getFrame().MMP);
+			makeShellMap.makeMap();
 			makeoutLines.makeout(MainSystem.getCurrentTree());
 			ShowAttribute.show(MainSystem.getFrame().AP, null);
 			System.out.println(MainSystem.getCurrentTree().getTreeSize());

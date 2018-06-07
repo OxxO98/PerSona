@@ -28,6 +28,8 @@ public class ShowAttribute {
 	public static void Selected(AttributePane AP, MapNode node) {
 		if(AP.SelectedNode != null) {
 			AP.SelectedNode.setTransformable(false);
+			AP.SelectedNode.setRevesreColor();
+			AP.SelectedNode.setReverse(false);
 			for(int i = 0; i < 8; i++) {
 				MainSystem.getFrame().MMP.remove(AP.SelectedNode.transform[i]);
 			}
@@ -36,11 +38,15 @@ public class ShowAttribute {
 		for(int i = 0; i < 8; i++) {
 			MainSystem.getFrame().MMP.add(AP.SelectedNode.transform[i]);
 		}
+		AP.SelectedNode.setRevesreColor();
+		AP.SelectedNode.setReverse(true);
 		AP.SelectedNode.setTransformable(true);
 	}
 	public static void Deselected(AttributePane AP) {
 		if(AP.SelectedNode != null) {
 			AP.SelectedNode.setTransformable(false);
+			AP.SelectedNode.setRevesreColor();
+			AP.SelectedNode.setReverse(false);
 			for(int i = 0; i < 8; i++) {
 				MainSystem.getFrame().MMP.remove(AP.SelectedNode.transform[i]);
 			}

@@ -1,13 +1,16 @@
 package Graphic;
 
 import javax.swing.*;
+
+import Event.SaveHandler;
+
 import java.awt.geom.*;
 import java.awt.*;
 
 public class MenuBar extends JMenuBar {
 	
 	private JMenu [] Menu = new JMenu[7];
-	
+	private JMenuItem [] FileMenu = new JMenuItem[3];
 	
 	private Graphics2D vector;
 	private Color ForeGroundColor = new Color(0xFFFFFF);
@@ -36,15 +39,23 @@ public class MenuBar extends JMenuBar {
 		Menu[5] = new JMenu("Window");
 		Menu[6] = new JMenu("Help");
 		
-		Menu[0].add(new JMenuItem("货 颇老"));
-		Menu[0].add(new JMenuItem("历厘"));
+		FileMenu[0] = new JMenuItem("货 颇老");
+		FileMenu[1] = new JMenuItem("历厘");
+		Menu[0].add(FileMenu[0]);
+		Menu[0].add(FileMenu[1]);
+		
 		Menu[6].add(new JMenuItem("档框富"));
 		
 		for(int i = 0; i < Menu.length; i++) {
 			this.add(Menu[i]);
 		}
 		
+		this.setEvent();
 		this.setVisible(true);
+	}
+	
+	private void setEvent() {
+		FileMenu[1].addActionListener(new SaveHandler());
 	}
 }
 

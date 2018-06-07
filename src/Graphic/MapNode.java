@@ -38,7 +38,7 @@ public class MapNode extends JLabel{
 	//积己磊
 	public MapNode() {
 		this.setDimension(100,100);
-		this.setXY(0, 0);
+		this.setNodeXY(0, 0);
 		this.setCriteriaDefault();
 	}
 	
@@ -52,7 +52,7 @@ public class MapNode extends JLabel{
 	public void expressNode(MindMapPane MMP) {
 		//graphic贸府 何盒
 		this.setLocation((int)x, (int)y);
-		this.setSize(new Dimension((int)width, (int)height));
+		this.setSize((int)width, (int)height);
 		this.setVisible(true);
 		this.setCriteria();
 		//MMP俊 眠啊
@@ -83,62 +83,73 @@ public class MapNode extends JLabel{
 			}
 		}
 	}
+	public void setTransformable(int atr, boolean b) {
+		if(b == true) {
+			for(int i = 0; i < 8; i++) {
+				if(atr == i) {	continue;	}
+				this.transform[i].resetTransform(i, (int)x, (int)y, (int)width, (int)height);
+				this.transform[i].express();
+				this.transform[i].setVisible(true);
+			}
+		}
+		else {
+			for(int i = 0; i < 8; i++) {
+				if(atr == i) {	continue;	}
+				this.transform[i].setVisible(false);
+			}
+		}
+	}
 	private void setTransformPoint() {
 		for(int i = 0; i < 8; i++) {
 			this.transform[i] = new TransformPoint(i, (int)x, (int)y, (int)width, (int)height);
 		}
 	}
 	public void alignTransform(int atr) {
-		int pointX = this.transform[atr].getX();
-		int pointY = this.transform[atr].getY();
+		int pointSize = transform[0].getPointSize()/2;
 		
-		int reflectPointAtr = (atr+4)%8;
-		int reflectX = this.transform[reflectPointAtr].getX();
-		int reflectY = this.transform[reflectPointAtr].getY();
-		
-		System.out.println("px" + pointX + ",rx" + reflectX);
-		System.out.println("py" + pointY + ",rx" + reflectY);
+		int minX = transform[7].getNodeX() + pointSize;
+		int minY = transform[7].getNodeY() + pointSize;
+		int maxX = transform[3].getNodeX();
+		int maxY = transform[3].getNodeY();
 		
 		switch(atr) {
-			case 1 :
-				this.setXY(reflectX, pointY);
-				this.setDimension(Math.abs(pointX - reflectX), Math.abs(pointY - reflectY));
-				break;
-			case 3 :
-				this.setXY(reflectX, reflectY);
-				this.setDimension(Math.abs(pointX - reflectX), Math.abs(pointY - reflectY));
-				break;
-			case 5 :
-				this.setXY(pointX, reflectY);
-				this.setDimension(Math.abs(pointX - reflectX), Math.abs(pointY - reflectY));
-				break;
-			case 7 :
-				this.setXY(pointX, pointY);
-				this.setDimension(Math.abs(pointX - reflectX), Math.abs(pointY - reflectY));
-				break;
 			case 0 :
-				this.setY(pointX);
-				this.setHeight(Math.abs(pointY - reflectY));
+				minY = transform[0].getNodeY() + pointSize;
 				break;
-			case 4 :
-				this.setY(reflectY);
-				this.setHeight(Math.abs(pointY - reflectY));
+			case 1 :
+				maxX = transform[1].getNodeX();
+				minY = transform[1].getNodeY() + pointSize;
 				break;
 			case 2 :
-				this.setWidth(Math.abs(pointX - reflectX));
+				maxX = transform[2].getNodeX();
+				break;
+			case 3 :
+				maxX = transform[3].getNodeX();
+				maxY = transform[3].getNodeY();
+				break;
+			case 4 :
+				maxY = transform[4].getNodeY();
+				break;
+			case 5 :
+				minX = transform[5].getNodeX() + pointSize;
+				maxY = transform[5].getNodeY();
 				break;
 			case 6 :
-				this.setX(pointX);
-				this.setWidth(Math.abs(pointX - reflectX));
+				minX = transform[6].getNodeX() + pointSize;
+				break;
+			case 7 :
+				minX = transform[7].getNodeX() + pointSize;
+				minY = transform[7].getNodeY() + pointSize;
 				break;
 		}
 		
-		for(int i = 0; i < 8; i++) {
-			if(i == atr) {
-				continue;
-			}
-			this.transform[i].resetTransform(i, (int)x, (int)y, (int)width, (int)height);
-		}
+		System.out.println(minX + " " + maxX);
+		System.out.println(minY + " " + maxY);
+		
+		this.x = minX;
+		this.y = minY;
+		this.width = maxX - minX;
+		this.height = maxY - minY;
 	}
 	//Draw
 	private void drawNode(Graphics2D vector) {
@@ -170,12 +181,15 @@ public class MapNode extends JLabel{
 	public Color getNodeColor() {
 		return this.BackGroundColor;
 	}
+	public int getStrokeWidth() {
+		return this.strokeWidth;
+	}
 	
 	//set Method
 	public void setInclude(TreeNode node) {
 		this.included = node;
 	}
-	public void setXY(double x, double y) {
+	public void setNodeXY(double x, double y) {
 		this.x = (int)x;
 		this.y = (int)y;
 	}
@@ -183,16 +197,16 @@ public class MapNode extends JLabel{
 		this.width = (int)width;
 		this.height = (int)height;
 	}
-	public void setX(double x) {
+	public void setNodeX(double x) {
 		this.x = (int)x;
 	}
-	public void setY(double y) {
+	public void setNodeY(double y) {
 		this.y = (int)y;
 	}
-	public void setWidth(double width) {
+	public void setNodeWidth(double width) {
 		this.width = (int)width;
 	}
-	public void setHeight(double height) {
+	public void setNodeHeight(double height) {
 		this.height = (int)height;
 	}
 	public void setColor() {

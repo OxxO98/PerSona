@@ -54,19 +54,26 @@ public class TransformPoint extends JLabel {
 	public int getAttribute() {
 		return this.attribute;
 	}
-	public int getX() {
+	public int getNodeX() {
 		return this.x;
 	}
-	public int getY() {
+	public int getNodeY() {
 		return this.y;
+	}
+	public int getPointSize() {
+		return this.size;
 	}
 	//set
 	public void setXY(int x, int y) {
 		this.x = x-size/2;
 		this.y = y-size/2;
-		
-//		System.out.println(this.x + "" + this.y);
-		
+		//???ㅇㅇ 잘 사용하지 맙시다.
+	}
+	public void setNodeX(int x) {
+		this.x = x;
+	}
+	public void setNodeY(int y) {
+		this.y = y;
 	}
 	public void setAttribute(int atr) {
 		this.attribute = atr;
@@ -99,6 +106,36 @@ public class TransformPoint extends JLabel {
 				this.setXY(x, y);
 				break;
 		}
+	}
+	public void setTransformNode(int x, int y, int width, int height) {
+		int Psize = size/2;
+		
+		switch(attribute) {
+			case 0 :
+				this.setLocation(x+width/2, y-Psize);
+				break;
+			case 1 :
+				this.setLocation(x+width, y-Psize);
+				break;
+			case 2 :
+				this.setLocation(x+width, y+height/2);
+				break;
+			case 3 :
+				this.setLocation(x+width, y+height);
+				break;
+			case 4 :
+				this.setLocation(x+width/2, y+height);
+				break;
+			case 5 :
+				this.setLocation(x-Psize, y+height);
+				break;
+			case 6 :
+				this.setLocation(x-Psize, y+height/2);
+				break;
+			case 7 :
+				this.setLocation(x-Psize, y-Psize);
+				break;
+		}	
 	}
 }
 

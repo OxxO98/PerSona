@@ -17,8 +17,12 @@ public class MakeTexttoTree {
 	static String originalStr;
 	static String [] splitedStr;
 	//public메소드
-	public static void startMake() {
+	public static boolean startMake() {
 		TextEditorPane TEP = MainSystem.getFrame().TEP;
+		
+		if(TEP.getText() == null) {
+			return false;
+		}
 		
 		MainSystem.setTree(new Tree());
 		MakeTexttoTree.tree = MainSystem.getCurrentTree();
@@ -30,6 +34,8 @@ public class MakeTexttoTree {
 		//확인용
 		MakeTexttoTree.tree.showTree();
 		MainSystem.setTree(MakeTexttoTree.tree);
+		
+		return true;
 	}
 	//private메소드
 	private static int getTextLevel(String str) {

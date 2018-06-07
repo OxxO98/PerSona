@@ -14,8 +14,6 @@ public class TreeNode{
 	private TreeNode child;
 	private TreeNode sibling;
 	
-	private String data;
-	
 	public MapNode Map = new MapNode();
 	//생성자
 	public TreeNode() {
@@ -96,13 +94,6 @@ public class TreeNode{
 		retStr = retStr.concat(Map.getData());
 		
 		return retStr;
-	}
-	public boolean isEqual(TreeNode node) {
-		// node와 비교
-		if(this.data != node.data) {
-			return false;
-		}
-		return true;
 	}
 	public String showInfo() {
 		String str1, str2, str3, str4, str5;

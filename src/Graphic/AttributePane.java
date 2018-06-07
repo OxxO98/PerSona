@@ -13,6 +13,7 @@ public class AttributePane extends JPanel {
 	
 	private JPanel AttributeArea = new JPanel();
 	private JButton ApplyButton = new JButton("Apply");
+	private JScrollPane ScrollPane;
 	public JLabel [] attributeLabel = new JLabel[6];
 	public JTextField [] attributeText = new JTextField[6];
 	public MapNode SelectedNode;
@@ -22,7 +23,7 @@ public class AttributePane extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		
-		this.add(AttributeArea, BorderLayout.CENTER);
+		this.add(new JScrollPane(AttributeArea), BorderLayout.CENTER);
 		this.add(ApplyButton, BorderLayout.SOUTH);
 		ApplyButton.addActionListener(new ApplyAttributeHandler());
 		

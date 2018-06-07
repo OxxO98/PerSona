@@ -107,7 +107,7 @@ class LinkLine extends JLabel {
 	}
 	
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+//		super.paintComponent(g);
 		Graphics2D vector = (Graphics2D)g;
 		vector.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//생성준비

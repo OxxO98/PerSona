@@ -35,7 +35,7 @@ public class MoveNodeHandler extends MouseAdapter {
 		Point ComponentXY = e.getLocationOnScreen();
 
 		ClickedNode.setLocation(ComponentXY.x - MMPxy.x - ComponentOnX, ComponentXY.y - MMPxy.y - ComponentOnY);
-		ClickedNode.setXY(ComponentXY.x - MMPxy.x - ComponentOnX, ComponentXY.y - MMPxy.y - ComponentOnY);
+		ClickedNode.setNodeXY(ComponentXY.x - MMPxy.x - ComponentOnX, ComponentXY.y - MMPxy.y - ComponentOnY);
 		
 		ShowAttribute.show(MainSystem.getFrame().AP, ClickedNode);
 		
@@ -46,6 +46,7 @@ public class MoveNodeHandler extends MouseAdapter {
 		MapNode ClickedNode = (MapNode)e.getComponent();
 		
 		ClickedNode.setTransformable(true);
+		
 		ClickedNode.expressNode(MainSystem.getFrame().MMP);
 		ClickedNode.getIncluded().refactorLink();
 	}

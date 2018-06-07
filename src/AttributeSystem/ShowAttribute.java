@@ -37,9 +37,6 @@ public class ShowAttribute {
 			MainSystem.getFrame().MMP.add(AP.SelectedNode.transform[i]);
 		}
 		AP.SelectedNode.setTransformable(true);
-		
-		System.out.println("asd" + MainSystem.getFrame().AP.SelectedNode);
-
 	}
 	public static void Deselected(AttributePane AP) {
 		if(AP.SelectedNode != null) {
@@ -52,7 +49,7 @@ public class ShowAttribute {
 	}
 	
 	public static void Apply(AttributePane AP, MapNode node) {
-		node.setXY(Double.parseDouble(AP.attributeText[1].getText()), Double.parseDouble(AP.attributeText[2].getText()));
+		node.setNodeXY(Double.parseDouble(AP.attributeText[1].getText()), Double.parseDouble(AP.attributeText[2].getText()));
 		node.setDimension(Double.parseDouble(AP.attributeText[3].getText()), Double.parseDouble(AP.attributeText[4].getText()));
 		node.setColor(MainSystem.toColor(AP.attributeText[5].getText()));
 		node.expressNode(MainSystem.getFrame().MMP);

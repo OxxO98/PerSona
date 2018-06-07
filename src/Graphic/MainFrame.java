@@ -1,11 +1,14 @@
 package Graphic;
 
 import Graphic.*;
+import Graphic.FileDialog;
 import System.MainSystem;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
+
+import Event.WindowStateHandler;
 
 import java.awt.*;
 
@@ -21,19 +24,24 @@ public class MainFrame extends JFrame {
 	public AttributePane AP = new AttributePane(this);
 	public TextEditorPane TEP = new TextEditorPane(this);
 	public MindMapPane MMP = new MindMapPane(this);
+ 
+	public JScrollPane ScrollPane = new JScrollPane();
+	public FileDialog saveDlog = new FileDialog();
+	public FileDialog openDlog = new FileDialog();
 	
 	public MainFrame() {		
-		setTitle("MindMap Program");
-		setSize(700, 400);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	
 		this.setJMenuBar(menu);
 		this.add(tool);
 		
 		this.loadSplitPane();
 		
 		TEP.setEvent();
-
+		this.setEvent();
+		
+		setTitle("MindMap Program");
+		setSize(800, 600);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 		setVisible(true);
 	}
 	
@@ -56,8 +64,15 @@ public class MainFrame extends JFrame {
 		
 		//컴포넌트 설정
 		rightSplitPane.setRightComponent(AP);
-		leftSplitPane.setRightComponent(MMP);
+		leftSplitPane.setRightComponent(ScrollPane);
+		MMP.setPreferredSize(new Dimension(800, 600));
+		ScrollPane.setViewportView(MMP);
+		ScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		ScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		leftSplitPane.setLeftComponent(TEP);
+	}
+	private void setEvent() {
+		this.addComponentListener(new WindowStateHandler());
 	}
 	
 	public static void main(String [] args) {

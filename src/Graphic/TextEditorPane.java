@@ -10,8 +10,9 @@ public class TextEditorPane extends JPanel{
 			
 	private MainFrame mainFrame;
 	
-	protected JTextArea TextEditorArea = new JTextArea();	
+	private JTextArea TextEditorArea = new JTextArea();	
 	private JButton ApplyButton = new JButton("Apply");
+	private JScrollPane ScrollPane = new JScrollPane();
 	
 	public TexttoTreeApplyHandler ApplyButtonHandler;
 	
@@ -20,12 +21,14 @@ public class TextEditorPane extends JPanel{
 
 		this.setLayout(new BorderLayout());
 		
-		this.add(TextEditorArea, BorderLayout.CENTER);
+		
+		this.add(new JScrollPane(TextEditorArea), BorderLayout.CENTER);
 		this.add(ApplyButton, BorderLayout.SOUTH);
 		
 		TextEditorArea.setTabSize(4);
 		
 		this.setVisible(true);
+		ScrollPane.setVisible(true);
 	}
 	//¸Þ¼Òµå
 	public void setEvent() {
@@ -41,6 +44,9 @@ public class TextEditorPane extends JPanel{
 	}
 	public String getText() {
 		return TextEditorArea.getText();
+	}
+	public void setText(String str) {
+		TextEditorArea.setText(str);
 	}
 	public JButton getButton() {
 		return ApplyButton;

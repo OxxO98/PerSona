@@ -1,5 +1,10 @@
 package System;
 
+import java.awt.Dimension;
+import java.awt.Rectangle;
+
+import MindMapSystem.makeShellMap;
+
 public class Tree {
 	public TreeNode root = new TreeNode(0);
 	
@@ -59,5 +64,35 @@ public class Tree {
 				selectNode = selectNode.getParent();
 			}
 		}
+	}
+	
+	public Dimension getTreeSize() {
+		double width, height;
+		
+		TreeNode selectedNode = this.root;
+		
+		int maxLevel = 0;
+						
+		while(true) {
+			if(selectedNode.getLevel() > maxLevel) {
+				maxLevel = selectedNode.getLevel();
+			}
+			
+			if(this.goNext(selectedNode) == null) {
+				break;
+			}
+			selectedNode = this.goNext(selectedNode);
+		}
+		width = makeShellMap.defWidth + Math.pow(1+makeShellMap.ratioDistance, maxLevel)*makeShellMap.distance*2;
+		height = makeShellMap.defHeight + Math.pow(1+makeShellMap.ratioDistance, maxLevel)*makeShellMap.distance*2;
+		
+		if(MainSystem.getFrame().MMP.getWidth() > width) {
+			width = MainSystem.getFrame().MMP.getX()+MainSystem.getFrame().MMP.getWidth();
+		}
+		if(MainSystem.getFrame().MMP.getHeight() > height) {
+			height = MainSystem.getFrame().MMP.getX()+MainSystem.getFrame().MMP.getWidth();
+		}
+		
+		return new Dimension((int)width, (int)height);
 	}
 }

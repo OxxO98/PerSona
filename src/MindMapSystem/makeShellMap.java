@@ -71,7 +71,7 @@ public class makeShellMap {
 				break;
 		}
 		node.Map.setDimension(width, height);
-		node.Map.setXY(NcitX+dX-width/2, NcitY+dY-height/2);
+		node.Map.setNodeXY(NcitX+dX-width/2, NcitY+dY-height/2);
 		node.Map.expressNode(MMP);
 		node.Map.showMember(MMP);
 	}
@@ -93,7 +93,7 @@ public class makeShellMap {
 	
 	private static void makeoutRoot() {
 		tree.root.Map.setDimension(defWidth, defHeight);
-		tree.root.Map.setXY(midX-defWidth/2, midY-defHeight/2);
+		tree.root.Map.setNodeXY(midX-defWidth/2, midY-defHeight/2);
 		tree.root.Map.expressNode(MMP);
 		tree.root.Map.showMember(MMP);
 	}

@@ -1,6 +1,9 @@
 package Graphic;
 
 import javax.swing.*;
+
+import Event.*;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -17,6 +20,7 @@ public class ToolBar extends JToolBar{
 		this.add(save);
 		this.add(open);
 		
+		this.setEvent();
 		this.setVisible(true);
 	}
 	
@@ -30,5 +34,10 @@ public class ToolBar extends JToolBar{
 		vector.draw(rect);
 		vector.setPaint(ForeGroundColor);
 		vector.fill(rect);
+	}
+	
+	private void setEvent() {
+		save.addActionListener(new SaveHandler());
+		open.addActionListener(new OpenHandler());
 	}
 }

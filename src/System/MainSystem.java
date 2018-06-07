@@ -2,10 +2,17 @@ package System;
 
 import java.awt.*;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import Graphic.MainFrame;
+import Graphic.MapNode;
+import Graphic.TransformPoint;
 
 public class MainSystem implements TreeSystem{
 	private static MainFrame mainProgram;
+	
+	public static Dimension defaultMMPSize = new Dimension(800, 600);
 	
 	static Tree [] tree = new Tree[1];
 	static int currentIndex = 0;
@@ -74,5 +81,45 @@ public class MainSystem implements TreeSystem{
 //		System.out.println(colorInteger[0] + " " + colorInteger[1] + " " + colorInteger[2]);
 		
 		return returnColor;
+	}
+	//toJSONObject
+	public static JSONArray toJson(Tree tree) {
+		JSONArray returnJson = new JSONArray();
+		
+		TreeNode selectedNode = tree.root;
+		int i = 0;
+		while(true) {
+			returnJson.add(i, MainSystem.toJson(selectedNode));
+			if(tree.goNext(selectedNode) == null) {
+				break;
+			}
+			i++;
+			selectedNode = tree.goNext(selectedNode);
+		}
+		
+		return returnJson;
+	}
+	public static JSONObject toJson(TreeNode node) {
+		JSONObject returnJson = new JSONObject();
+		
+		returnJson.put("level", node.getLevel());
+		returnJson.put("Map", MainSystem.toJson(node.Map));
+		
+		return returnJson;
+	}
+	public static JSONObject toJson(MapNode node) {
+		JSONObject returnJson = new JSONObject();
+		
+		returnJson.put("data", node.getData());
+		returnJson.put("x", node.getNodeX());
+		returnJson.put("y", node.getNodeY());
+		returnJson.put("width", node.getNodeWidth());
+		returnJson.put("height", node.getNodeHeight());
+		
+//		returnJson.put("ForeGroundColor", node.getForeground());
+//		returnJson.put("BackgroundColor", node.getBackground());
+		returnJson.put("strokeWidth", node.getStrokeWidth());
+		
+		return returnJson;
 	}
 }

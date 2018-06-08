@@ -12,8 +12,6 @@ public class MakeTexttoTree {
 	 * startMake실행할때마다 새로 만듬
 	 */
 	
-	static Tree tree;
-	
 	static String originalStr;
 	static String [] splitedStr;
 	//public메소드
@@ -25,15 +23,15 @@ public class MakeTexttoTree {
 		}
 		
 		MainSystem.setTree(new Tree());
-		MakeTexttoTree.tree = MainSystem.getCurrentTree();
+		Tree tree = MainSystem.getCurrentTree();
 		//null일떄를 위한 과정 null이 아니면 그냥 별 영향 X임
 		MakeTexttoTree.originalStr = TEP.getText();
 		MakeTexttoTree.splitedStr = MakeTexttoTree.originalStr.split("\n");
 		
 		MakeTexttoTree.makeTree();
 		//확인용
-		MakeTexttoTree.tree.showTree();
-		MainSystem.setTree(MakeTexttoTree.tree);
+		tree.showTree();
+		MainSystem.setTree(tree);
 		
 		return true;
 	}
@@ -50,6 +48,8 @@ public class MakeTexttoTree {
 		return level;
 	}
 	private static void makeTree() {
+		Tree tree = MainSystem.getCurrentTree();
+		
 		TreeNode selectedNode = tree.root;
 		//root 생성
 		for(int i = 0; i < splitedStr.length; i++) {
@@ -99,6 +99,8 @@ public class MakeTexttoTree {
 	}
 	//Sibling위치 찾아주기
 	private static TreeNode isWhere(int level) {
+		Tree tree = MainSystem.getCurrentTree();
+		
 		TreeNode selectedNode = tree.getLastRightNode();
 		while(true) {
 			if(selectedNode.getLevel() == level) {

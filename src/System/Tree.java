@@ -86,11 +86,11 @@ public class Tree {
 		width = makeShellMap.defWidth + Math.pow(1+makeShellMap.ratioDistance, maxLevel)*makeShellMap.distance*2;
 		height = makeShellMap.defHeight + Math.pow(1+makeShellMap.ratioDistance, maxLevel)*makeShellMap.distance*2;
 		
-		if(MainSystem.getFrame().MMP.getWidth() > width) {
+		if(800 >= width) {
 			width = MainSystem.getFrame().MMP.getX()+MainSystem.getFrame().MMP.getWidth();
 		}
-		if(MainSystem.getFrame().MMP.getHeight() > height) {
-			height = MainSystem.getFrame().MMP.getX()+MainSystem.getFrame().MMP.getWidth();
+		if(600 >= height) {
+			height = MainSystem.getFrame().MMP.getX()+MainSystem.getFrame().MMP.getHeight();
 		}
 		
 		return new Dimension((int)width, (int)height);

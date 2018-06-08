@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
 	public TextEditorPane TEP = new TextEditorPane(this);
 	public MindMapPane MMP = new MindMapPane(this);
  
-	public JScrollPane ScrollPane = new JScrollPane();
+	public JScrollPane MMPScrollPane = new JScrollPane();
 	public FileDialog saveDlog = new FileDialog();
 	public FileDialog openDlog = new FileDialog();
 	
@@ -64,11 +64,11 @@ public class MainFrame extends JFrame {
 		
 		//컴포넌트 설정
 		rightSplitPane.setRightComponent(AP);
-		leftSplitPane.setRightComponent(ScrollPane);
-		MMP.setPreferredSize(new Dimension(800, 600));
-		ScrollPane.setViewportView(MMP);
-		ScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		ScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		leftSplitPane.setRightComponent(MMPScrollPane);
+		MMP.setPreferredSize(MainSystem.defaultMMPSize);
+		MMPScrollPane.setViewportView(MMP);
+		MMPScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		MMPScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		leftSplitPane.setLeftComponent(TEP);
 	}
 	private void setEvent() {

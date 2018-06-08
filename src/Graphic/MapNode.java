@@ -24,6 +24,8 @@ public class MapNode extends JLabel{
 	//Color
 	private Color ForeGroundColor = new Color(0x000000);
 	private Color BackGroundColor = new Color(0xFFFFFF);
+	private Color ReverseColor = new Color(0x000000);	//반드시 reverse로 해야함
+	private boolean reverse = false;
 	
 	//data & Location
 	private double x, y, width, height;
@@ -31,6 +33,7 @@ public class MapNode extends JLabel{
 	private TreeNode included;
 	
 	//Graphics
+	private boolean refX = false, refY = false;
 	private Graphics2D vector;
 	private int strokeWidth = 5;
 	private boolean init = false;
@@ -143,13 +146,86 @@ public class MapNode extends JLabel{
 				break;
 		}
 		
-		System.out.println(minX + " " + maxX);
-		System.out.println(minY + " " + maxY);
+		if(maxX > minX) {
+			if(maxY > minY) {
+				this.x = minX;
+				this.y = minY;
+				this.refX = false;
+				this.refY = false;
+			}
+			else {
+				this.x = minX;
+				this.y = maxY;
+				this.refX = false;
+				this.refY = true;
+			}
+		}
+		else {
+			if(maxY > minY) {
+				this.x = maxX+pointSize;
+				this.y = minY;
+				this.refX = true;
+				this.refY = false;
+			}
+			else {
+				this.x = maxX+pointSize;
+				this.y = maxY;
+				this.refX = true;
+				this.refY = true;
+			}
+		}
 		
-		this.x = minX;
-		this.y = minY;
-		this.width = maxX - minX;
-		this.height = maxY - minY;
+		this.width = Math.abs(maxX+pointSize*2 - minX);
+		this.height = Math.abs(maxY+pointSize*2 - minY);
+	}
+	public void expressTransformPoint(int atr) {
+		int [] ref = new int[4];
+		int refXY = 0;
+		if(refX == true) {	refXY+=1;	}
+		if(refY == true) {	refXY+=2;	}
+		/*
+		 * 0은 FF 1은 X축 reflect 2는 Y축reflect 3은 XY둘다
+		 */
+		
+		switch(atr) {
+			case 0 :
+				ref[0]=0; ref[1]=0; ref[2]=4; ref[3]=0;
+				break; 
+			case 1 :
+				ref[0]=1; ref[1]=7; ref[2]=3; ref[3]=5;
+				break;
+			case 2 :
+				ref[0]=2; ref[1]=6; ref[2]=2; ref[3]=2;
+				break;
+			case 3 :
+				ref[0]=3; ref[1]=5; ref[2]=1; ref[3]=7;
+				break;
+			case 4 :
+				ref[0]=4; ref[1]=4; ref[2]=0; ref[3]=4;
+				break;
+			case 5 :
+				ref[0]=5; ref[1]=3; ref[2]=7; ref[3]=1;
+				break;
+			case 6 :
+				ref[0]=6; ref[1]=2; ref[2]=6; ref[3]=6;
+				break;
+			case 7 :
+				ref[0]=7; ref[1]=1; ref[2]=5; ref[3]=3;
+				break;
+		}
+		
+		this.setTransformable(atr, false);	//Transform 리셋
+		this.transform[atr].setVisible(false);
+		this.transform[ref[refXY]].setVisible(false);
+		for(int i = 0; i < 8; i++) {
+			if(atr == i || ref[refXY] == i) { continue;	}
+			this.transform[i].setTransformNode(i, (int)x, (int)y, (int)width, (int)height);
+			this.transform[i].setVisible(true);
+		}
+		this.transform[ref[refXY]].setTransformNode(atr, (int)x, (int)y, (int)width, (int)height);
+		this.transform[atr].setTransformNode(ref[refXY], (int)x, (int)y, (int)width, (int)height);
+		this.transform[ref[refXY]].setVisible(true);
+		this.transform[atr].setVisible(true);
 	}
 	//Draw
 	private void drawNode(Graphics2D vector) {
@@ -158,8 +234,23 @@ public class MapNode extends JLabel{
 		vector.setStroke(stroke);
 		vector.setColor(ForeGroundColor);
 		vector.draw(rect);
-		vector.setPaint(BackGroundColor);
+		if(reverse == true) {
+			vector.setPaint(ReverseColor);
+		}
+		else {
+			vector.setPaint(BackGroundColor);
+		}
 		vector.fill(rect);
+	}
+	public void setRevesreColor() {
+		int red = BackGroundColor.getRed();
+		int green = BackGroundColor.getGreen();
+		int blue = BackGroundColor.getBlue();
+		
+		ReverseColor = new Color(255-red, 255-green, 255-blue);
+	}
+	public void setReverse(boolean b) {
+		this.reverse = b;
 	}
 	
 	//get Method

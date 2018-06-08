@@ -23,7 +23,6 @@ public class ShowAttributeHandler extends MouseAdapter{
 			ShowAttribute.Deselected(MainSystem.getFrame().AP);
 		}
 		//out
-		System.out.println(MainSystem.getFrame().AP.SelectedNode);
 
 		ShowAttribute.show(MainSystem.getFrame().AP, MainSystem.getFrame().AP.SelectedNode);
 	}

@@ -54,24 +54,21 @@ public class TransformHandler extends MouseAdapter {
 			ClickedPoint.setNodeX(ComponentXY.x - MMPxy.x - ComponentOnX);
 			ClickedPoint.setNodeY(ComponentXY.y - MMPxy.y - ComponentOnY);
 		}
-		ClickedNode.alignTransform(atr);
-		ClickedNode.expressNode(MainSystem.getFrame().MMP);
-		ShowAttribute.show(MainSystem.getFrame().AP, ClickedNode);
 		
-		ClickedNode.setTransformable(atr, false);
-		for(int i = 0; i < 8; i++) {
-			if(atr == i) { continue;	}
-			ClickedNode.transform[i].setTransformNode((int)ClickedNode.getNodeX(), (int)ClickedNode.getNodeY(), (int)ClickedNode.getNodeWidth(), (int)ClickedNode.getNodeHeight());
-			ClickedNode.transform[i].setVisible(true);
-		}
-		ClickedNode.getIncluded().refactorLink();
+		ClickedNode.alignTransform(atr);	//MapNode의 xywh값 수정
+		ClickedNode.expressTransformPoint(atr);	//TransformPoint보이기
 		
-		MainSystem.getFrame().MMP.repaint();
+		ClickedNode.expressNode(MainSystem.getFrame().MMP);	//수정된 값으로 MapNode Express
+		ShowAttribute.show(MainSystem.getFrame().AP, ClickedNode);	//정보표시
+		
+		ClickedNode.getIncluded().refactorLink();	//연결점 재설정
+		
+		MainSystem.getFrame().MMP.repaint();	//다시그리기
 	}
 	public void mouseReleased(MouseEvent e) {
 		MapNode ClickedNode = MainSystem.getFrame().AP.SelectedNode;
 		TransformPoint ClickedPoint = (TransformPoint)e.getComponent();
-
+		//안정화
 		ClickedNode.setTransformable(true);
 		
 		MainSystem.getFrame().MMP.repaint();

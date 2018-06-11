@@ -20,5 +20,7 @@ public class ApplyAttributeHandler implements ActionListener {
 		ShowAttribute.Apply(MainSystem.getFrame().AP, node);	//null	node
 		ShowAttribute.Selected(MainSystem.getFrame().AP, node);	//node 	node
 		ShowAttribute.show(MainSystem.getFrame().AP, node);
+		
+		MainSystem.getFrame().MMP.repaint();
 	}
 }

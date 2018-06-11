@@ -41,6 +41,7 @@ public class MoveNodeHandler extends MouseAdapter {
 		
 		ClickedNode.expressNode(MainSystem.getFrame().MMP);
 		ClickedNode.getIncluded().refactorLink();
+		MainSystem.getFrame().MMP.repaint();
 	}
 	public void mouseReleased(MouseEvent e) {
 		MapNode ClickedNode = (MapNode)e.getComponent();

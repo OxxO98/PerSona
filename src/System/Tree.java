@@ -87,11 +87,42 @@ public class Tree {
 		height = makeShellMap.defHeight + Math.pow(1+makeShellMap.ratioDistance, maxLevel)*makeShellMap.distance*2;
 		
 		if(800 >= width) {
-			width = MainSystem.getFrame().MMP.getX()+MainSystem.getFrame().MMP.getWidth();
+			width = 800;
 		}
 		if(600 >= height) {
-			height = MainSystem.getFrame().MMP.getX()+MainSystem.getFrame().MMP.getHeight();
+			height = 600;
 		}
+		
+		return new Dimension((int)width, (int)height);
+	}
+	public Dimension getTreeMapSize() {
+		double width, height;
+		
+		TreeNode selectedNode = this.root;
+		
+		int minX = 0, minY = 0, maxX = MainSystem.getFrame().MMP.getWidth(), maxY = MainSystem.getFrame().MMP.getHeight();
+						
+		while(true) {
+			if(minX > selectedNode.Map.getNodeX()) {
+				minX = (int)selectedNode.Map.getNodeX();
+			}
+			if(maxX < selectedNode.Map.getNodeX() + selectedNode.Map.getNodeWidth()) {
+				maxX = (int)(selectedNode.Map.getNodeX() + selectedNode.Map.getNodeWidth());
+			}
+			if(minY > selectedNode.Map.getNodeY()) {
+				minX = (int)selectedNode.Map.getNodeY();
+			}
+			if(maxY < selectedNode.Map.getNodeY() + selectedNode.Map.getNodeHeight()) {
+				maxX = (int)(selectedNode.Map.getNodeY() + selectedNode.Map.getNodeHeight());
+			}
+			
+			if(this.goNext(selectedNode) == null) {
+				break;
+			}
+			selectedNode = this.goNext(selectedNode);
+		}
+		width = maxX-minX;
+		height = maxY-minY;
 		
 		return new Dimension((int)width, (int)height);
 	}

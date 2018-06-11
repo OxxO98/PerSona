@@ -2,15 +2,27 @@ package Graphic;
 
 import javax.swing.*;
 
-import Event.SaveHandler;
+import Event.ApplyAttributeHandler;
+import Event.TexttoTreeApplyHandler;
 
 import java.awt.geom.*;
 import java.awt.*;
+import MenuHandler.*;
 
 public class MenuBar extends JMenuBar {
 	
 	private JMenu [] Menu = new JMenu[7];
-	private JMenuItem [] FileMenu = new JMenuItem[3];
+	private JMenuItem [][] MenuItem = new JMenuItem[7][];
+	
+	private String [][] MenuString = {
+			{"새로 만들기","열기", "저장", "다른 이름으로 저장","닫기"},
+			{"적용", "변경"},
+			{"a", "b"},
+			{"c"},
+			{"중앙 이동"},
+			{"새창으로 열기"},
+			{"도움말"}
+		};
 	
 	private Graphics2D vector;
 	private Color ForeGroundColor = new Color(0xFFFFFF);
@@ -39,23 +51,34 @@ public class MenuBar extends JMenuBar {
 		Menu[5] = new JMenu("Window");
 		Menu[6] = new JMenu("Help");
 		
-		FileMenu[0] = new JMenuItem("새 파일");
-		FileMenu[1] = new JMenuItem("저장");
-		Menu[0].add(FileMenu[0]);
-		Menu[0].add(FileMenu[1]);
-		
-		Menu[6].add(new JMenuItem("도움말"));
-		
+		//메뉴 아이텐 추가
 		for(int i = 0; i < Menu.length; i++) {
+			this.SetMenuItem(i, MenuString[i]);
+			for(int j = 0; j < MenuString[i].length; j++) {
+				Menu[i].add(MenuItem[i][j]);
+			}
 			this.add(Menu[i]);
 		}
-		
 		this.setEvent();
 		this.setVisible(true);
 	}
+	private void SetMenuItem(int index, String [] arg){
+		MenuItem[index] = new JMenuItem[arg.length];
+		for(int i = 0; i<arg.length; i++) {
+			MenuItem[index][i] = new JMenuItem(arg[i]);
+		}
+	}
 	
 	private void setEvent() {
-		FileMenu[1].addActionListener(new SaveHandler());
+		//File
+		MenuItem[0][0].addActionListener(new ResetNewHandler());
+		MenuItem[0][2].addActionListener(new SaveHandler());
+		MenuItem[0][1].addActionListener(new OpenHandler());
+		MenuItem[0][4].addActionListener(new ExitHandler());
+		MenuItem[0][3].addActionListener(new SaveNewHandler());
+		//Edit
+		MenuItem[1][0].addActionListener(new TexttoTreeApplyHandler());
+		MenuItem[1][1].addActionListener(new ApplyAttributeHandler());
 	}
 }
 

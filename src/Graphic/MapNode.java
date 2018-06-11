@@ -311,11 +311,20 @@ public class MapNode extends JLabel{
 		this.ForeGroundColor = Fore;
 		this.BackGroundColor = Back;
 	}
+	public void setStrokeWidth(int strokeWidth) {
+		this.strokeWidth = strokeWidth;
+	}
 	public void setData(String data) {
 		this.data = data;
 	}
 	public String getData() {
 		return data;
+	}
+	public Color getForeGroundColor() {
+		return this.ForeGroundColor;
+	}
+	public Color getBackGroundColor() {
+		return this.BackGroundColor;
 	}
 	
 	//link

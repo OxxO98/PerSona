@@ -6,19 +6,34 @@ import Event.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import MenuHandler.*;
 
 public class ToolBar extends JToolBar{
 	
-	protected JButton save = new JButton("save");
-	protected JButton open = new JButton("open");
+	private JButton save = new JButton("save");
+	private JButton open = new JButton("open");
+	private JButton makeNew = new JButton("new");
+	private JButton saveNew = new JButton("saveNew");
+	
+	private JButton apply = new JButton("apply");
+	private JButton change = new JButton("change");
+	
+	private JButton exit = new JButton("exit");
 	
 	private Graphics2D vector;
 	private Color ForeGroundColor = new Color(0xFFFFFF);
 	private Color BackGroundColor = new Color(0x303030);
 	
 	public ToolBar() {
-		this.add(save);
+		this.add(makeNew);
 		this.add(open);
+		this.add(save);
+		this.add(saveNew);
+
+		this.add(apply);
+		this.add(change);
+		
+		this.add(exit);
 		
 		this.setEvent();
 		this.setVisible(true);
@@ -39,5 +54,12 @@ public class ToolBar extends JToolBar{
 	private void setEvent() {
 		save.addActionListener(new SaveHandler());
 		open.addActionListener(new OpenHandler());
+		makeNew.addActionListener(new ResetNewHandler());
+		saveNew.addActionListener(new SaveNewHandler());
+		
+		apply.addActionListener(new TexttoTreeApplyHandler());
+		change.addActionListener(new ApplyAttributeHandler());
+		
+		exit.addActionListener(new ExitHandler());
 	}
 }

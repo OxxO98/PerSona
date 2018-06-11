@@ -1,21 +1,26 @@
-package Event;
+package MenuHandler;
 
-import java.awt.event.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 
 import org.json.simple.JSONObject;
 
-import Graphic.*;
-import System.*;
+import System.FileSystem;
+import System.MainSystem;
+import java.awt.event.*;
 
-public class SaveHandler implements ActionListener {
-	
-	public SaveHandler() {	}
+public class SaveNewHandler implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
+		
 		int booleanSelected = MainSystem.getFrame().saveDlog.showSaveDialog(MainSystem.getFrame());
+		if(booleanSelected == JFileChooser.CANCEL_OPTION) {
+			return;
+		}
 		File selected = MainSystem.getFrame().saveDlog.getSelectedFile();
 		JSONObject savedData = FileSystem.Save();
 		
@@ -30,5 +35,7 @@ public class SaveHandler implements ActionListener {
 				err.printStackTrace();
 			}
 		}
+		FileSystem.savedFile = selected;
+		FileSystem.saved = true;
 	}
 }

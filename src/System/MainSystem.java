@@ -1,6 +1,7 @@
 package System;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,12 +10,14 @@ import Graphic.MainFrame;
 import Graphic.MapNode;
 import Graphic.TransformPoint;
 
-public class MainSystem implements TreeSystem{
+public class MainSystem{
 	private static MainFrame mainProgram;
 	
-	public static Dimension defaultMMPSize = new Dimension(800, 600);
+	public static Dimension defaultMMPSize = new Dimension(365, 480);
 	
-	static Tree [] tree = new Tree[1];
+	public static int FrameWidth = 800;
+	
+	static ArrayList<Tree> tree = new ArrayList<Tree>();
 	static int currentIndex = 0;
 	
 	//mainFrameSystem
@@ -26,21 +29,27 @@ public class MainSystem implements TreeSystem{
 	}
 	
 	//TreeSystem
-	public void addTree(Tree tree) {
-		Tree [] savedTree = new Tree[MainSystem.tree.length+1];
-		for(int i = 0; i < MainSystem.tree.length; i++) {
-			savedTree[i] = MainSystem.tree[i];
-		}
-		MainSystem.tree = savedTree;
+	public static void addTree(Tree tree) {
+		MainSystem.tree.add(tree);
 	}
-	public Tree getTree(int treeIndex) {
-		return MainSystem.tree[treeIndex];
+	public static Tree getTree(int treeIndex) {
+		return MainSystem.tree.get(treeIndex);
+	}
+	public static void removeTree() {
+		if(tree.isEmpty() == true) {
+			return;
+		}
+		MainSystem.tree.remove(MainSystem.currentIndex);
 	}
 	public static void setTree(Tree tree) {
-		MainSystem.tree[MainSystem.currentIndex] = tree;
+		MainSystem.tree.add(MainSystem.currentIndex, tree);
 	}
 	public static Tree getCurrentTree() {
-		return MainSystem.tree[MainSystem.currentIndex];
+		if(tree.isEmpty() == true) {
+			System.out.println("null");
+			return null;
+		}
+		return MainSystem.tree.get(MainSystem.currentIndex);
 	}
 	
 	//AttributeSystem
@@ -116,8 +125,8 @@ public class MainSystem implements TreeSystem{
 		returnJson.put("width", node.getNodeWidth());
 		returnJson.put("height", node.getNodeHeight());
 		
-//		returnJson.put("ForeGroundColor", node.getForeground());
-//		returnJson.put("BackgroundColor", node.getBackground());
+		returnJson.put("ForeGroundColor", MainSystem.toString(node.getForeGroundColor()));
+		returnJson.put("BackgroundColor", MainSystem.toString(node.getBackGroundColor()));
 		returnJson.put("strokeWidth", node.getStrokeWidth());
 		
 		return returnJson;

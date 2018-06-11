@@ -3,8 +3,12 @@ package MindMapSystem;
 import System.*;
 
 import java.awt.Color;
+import java.awt.Point;
 
 import javax.swing.JLabel;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import Event.ShowAttributeHandler;
 import Graphic.*;
@@ -25,7 +29,6 @@ public class makeShellMap {
 		midX = MMP.getWidth()/2;
 		midY = MMP.getHeight()/2;
 		
-		MMP.removeAll();
 		makeShellMap.makeoutRoot();
 		makeShellMap.makeoutNotRoot();
 		
@@ -33,7 +36,63 @@ public class makeShellMap {
 		MMP.setVisible(false);
 		MMP.setVisible(true);
 	}
-	
+	public static void makeMap(JSONObject jsonObj) {
+		Tree tree = MainSystem.getCurrentTree();
+		MindMapPane MMP = MainSystem.getFrame().MMP;
+		
+		JSONArray treeArray = (JSONArray)jsonObj.get("tree");
+		
+		TreeNode selectedNode = tree.root;
+		
+		int i = 0;
+		while(true) {
+			makeShellMap.setData(selectedNode, (JSONObject)treeArray.get(i));
+			if(tree.goNext(selectedNode) == null) {
+				break;
+			}
+			selectedNode = tree.goNext(selectedNode);
+			i++;
+		}
+		
+		makeShellMap.expressMap(tree);
+		
+		MMP.repaint();
+		MMP.setVisible(false);
+		MMP.setVisible(true);
+	}
+	public static void expressMap(Tree tree) {
+		MindMapPane MMP = MainSystem.getFrame().MMP;
+
+		TreeNode selectedNode = tree.root;
+		
+		while(true) {
+			selectedNode.Map.expressNode(MMP);
+			if(tree.goNext(selectedNode) == null) {
+				break;
+			}
+			selectedNode = tree.goNext(selectedNode);
+		}
+		
+		MMP.repaint();
+		MMP.setVisible(false);
+		MMP.setVisible(true);
+	}
+	private static void setData(TreeNode node, JSONObject jsonObj) {
+		JSONObject MapData = (JSONObject)jsonObj.get("Map");
+		
+		node.Map.setData((String)MapData.get("data"));
+		node.Map.setNodeX(	(double)MapData.get("x"));
+		node.Map.setNodeY(	(double)MapData.get("y"));
+		node.Map.setNodeWidth(	(double)MapData.get("width"));
+		node.Map.setNodeHeight(	(double)MapData.get("height"));
+		
+		node.Map.setColor(	(Color)MainSystem.toColor((String)MapData.get("ForeGroundColor"))
+							,(Color)MainSystem.toColor((String)MapData.get("BackgroundColor")));
+		node.Map.setStrokeWidth(((Long)MapData.get("strokeWidth")).intValue());
+		
+		node.Map.setDimension(node.Map.getNodeWidth(), node.Map.getNodeHeight());
+		node.Map.setNodeXY(node.Map.getNodeX(), node.Map.getNodeY());
+	}
 	private static void makeoutNode(TreeNode node) {
 		MindMapPane MMP = MainSystem.getFrame().MMP;
 		
@@ -71,12 +130,11 @@ public class makeShellMap {
 		}
 		node.Map.setDimension(width, height);
 		node.Map.setNodeXY(NcitX+dX-width/2, NcitY+dY-height/2);
-		node.Map.expressNode(MMP);
-		node.Map.showMember(MMP);
 	}
 	
 	private static void makeoutNotRoot() {
 		Tree tree = MainSystem.getCurrentTree();
+		MindMapPane MMP = MainSystem.getFrame().MMP;
 		
 		TreeNode node = tree.root.getChild();
 		if(node == null) {
@@ -84,6 +142,7 @@ public class makeShellMap {
 		}
 		while(true) {
 			makeShellMap.makeoutNode(node);
+			node.Map.expressNode(MMP);
 			if(tree.goNext(node) == null) {
 				break;
 			}
@@ -99,6 +158,6 @@ public class makeShellMap {
 		tree.root.Map.setDimension(defWidth, defHeight);
 		tree.root.Map.setNodeXY(midX-defWidth/2, midY-defHeight/2);
 		tree.root.Map.expressNode(MMP);
-		tree.root.Map.showMember(MMP);
+//		tree.root.Map.showMember(MMP);
 	}
 }

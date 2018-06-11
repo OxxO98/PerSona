@@ -18,7 +18,7 @@ public class MakeTexttoTree {
 	public static boolean startMake() {
 		TextEditorPane TEP = MainSystem.getFrame().TEP;
 		
-		if(TEP.getText() == null) {
+		if(TEP.getText().equals("") == true) {
 			return false;
 		}
 		
@@ -27,6 +27,10 @@ public class MakeTexttoTree {
 		//null일떄를 위한 과정 null이 아니면 그냥 별 영향 X임
 		MakeTexttoTree.originalStr = TEP.getText();
 		MakeTexttoTree.splitedStr = MakeTexttoTree.originalStr.split("\n");
+		
+		if(MakeTexttoTree.isVaildTree(MakeTexttoTree.splitedStr) == false) {
+			return false;
+		}
 		
 		MakeTexttoTree.makeTree();
 		//확인용
@@ -38,12 +42,18 @@ public class MakeTexttoTree {
 	//private메소드
 	private static int getTextLevel(String str) {
 		int level = 0;
-		while(true) {
-			if(str.charAt(level) != '\t') {
-				break;
+		try {
+			while(true) {
+				if(str.charAt(level) != '\t') {
+					break;
+				}
+				level++;
 			}
-			level++;
 		}
+		catch(StringIndexOutOfBoundsException e) {
+			
+		}
+		
 
 		return level;
 	}
@@ -115,5 +125,29 @@ public class MakeTexttoTree {
 			selectedNode = selectedNode.getSibling();
 		}
 		return selectedNode;
+	}
+	//splitedStr이 트리가 되는지 확인
+	private static boolean isVaildTree(String [] SplitStr) {
+		int rootNum = 0;
+		//root가 없을때
+		if(SplitStr[0].equals("")) {
+			return false;
+		}
+		
+		for(int i = 0; i < SplitStr.length; i++) {
+			//데이터가 없을때
+			if(SplitStr[i].substring(MakeTexttoTree.getTextLevel(SplitStr[i])).equals("")) {
+				return false;
+			}
+			//root개수
+			if(MakeTexttoTree.getTextLevel(SplitStr[i]) == 0) {
+				rootNum++;
+			}
+		}
+		//root여러개일때
+		if(rootNum > 1) {
+			return false;
+		}
+		return true;
 	}
 }

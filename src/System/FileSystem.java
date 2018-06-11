@@ -1,5 +1,6 @@
 package System;
 
+import java.awt.Point;
 import java.io.*;
 
 import org.json.simple.JSONArray;
@@ -13,6 +14,9 @@ import MindMapSystem.makeoutLines;
 import TextEditorSystem.MakeTexttoTree;
 
 public class FileSystem {
+	
+	public static boolean saved = false;
+	public static File savedFile;
 	
 	public static JSONObject Save() {
 		JSONObject saved = new JSONObject();
@@ -31,10 +35,17 @@ public class FileSystem {
 			MakeJsontoText.startMake(jsonObj);
 			ShowAttribute.Deselected(MainSystem.getFrame().AP);
 			MakeTexttoTree.startMake();
-			makeShellMap.makeMap();
-			makeoutLines.makeout(MainSystem.getCurrentTree());
+			//트리 생성후
+			MainSystem.getFrame().MMP.removeAll();
+			MainSystem.getFrame().MMPScrollPane.getViewport().setViewPosition(new Point(0,0));
+			MainSystem.getFrame().MMP.resizePane(MainSystem.getCurrentTree().getTreeSize());
+			Point center = new Point(MainSystem.getFrame().MMP.getWidth()/2-MainSystem.getFrame().MMPScrollPane.getViewport().getWidth()/2
+								,MainSystem.getFrame().MMP.getHeight()/2-MainSystem.getFrame().MMPScrollPane.getViewport().getHeight()/2);
+			MainSystem.getFrame().MMPScrollPane.getViewport().setViewPosition(center);
+			//MMP기초 설정후
+			makeShellMap.makeMap(jsonObj);
+			//Data설정후
 			ShowAttribute.show(MainSystem.getFrame().AP, null);
-			System.out.println(MainSystem.getCurrentTree().getTreeSize());
 			MainSystem.getFrame().MMP.repaint();
 		}
 		catch (FileNotFoundException e) {

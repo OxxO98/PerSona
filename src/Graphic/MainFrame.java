@@ -1,7 +1,9 @@
 package Graphic;
 
 import Graphic.*;
+import Event.*;
 import Graphic.FileDialog;
+import System.ColorSet;
 import System.MainSystem;
 
 import javax.swing.*;
@@ -14,8 +16,8 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
 
-	protected MenuBar menu = new MenuBar();
-	protected ToolBar tool = new ToolBar();
+	private MenuBar menu = new MenuBar();
+	private ToolBar tool = new ToolBar();
 	
 	public JPanel mainPane = new JPanel();
 	public JSplitPane rightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -71,6 +73,7 @@ public class MainFrame extends JFrame {
 		MMPScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		leftSplitPane.setLeftComponent(TEP);
 	}
+	
 	private void setEvent() {
 		this.addComponentListener(new WindowStateHandler());
 	}
